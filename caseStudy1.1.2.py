@@ -3,21 +3,17 @@ from html.parser import HTMLParser
 
 class htmlParser(HTMLParser):
 
-    #spamTag = '<span class="field-content card-title">'
     lsStartTags = list()
-    d = list()
 
     def handle_starttag(self, tag, attrs):
         if (tag == 'span'):
             for attr in attrs:
                 if 'card-title' in attr[1]:
-                    d = d.append(attr[1])
-                    #print(attr[1])
-                    #self.handle_data(d)
-
+                    self.handle_data(self)
 
     def handle_data(self, data):
-        print(data)
+        if 'Lizhong' in data:
+               print(data)
 
 parser = htmlParser()
 
