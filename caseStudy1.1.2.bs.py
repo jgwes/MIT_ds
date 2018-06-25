@@ -14,7 +14,12 @@ for a in sp:
 
 print(profs)
 
-
+#url = 'http://export.arxiv.org/api/query?search_query=all:electron&start=0&max_results=1'
+#url = 'http://export.arxiv.org/api/query?search_query=au:Arvind+AND+cat:eess'
+#url = 'http://arxiv.org/find/(subject)/1/au:+(lastname)_(initial)/0/1/0/all/0/1'
+url = 'http://arxiv.org/find/eess/1/au:+Arvind/0/1/0/all/0/1'
+data = urllib.request.urlopen(url).read()
+print(data)
 
 
 
