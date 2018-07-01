@@ -15,10 +15,41 @@ for a in sp:
 # test retrieval of profs
 print(profs)
 
+queryNames = []
+
+# transpose names for arxiv API
+for p in profs:
+    print(p)
+    splitName = p.split()
+    if len(splitName) < 3:
+        try:
+            queryNames.append(splitName[1] + '_' + splitName[0][0])
+        except IndexError:
+            queryNames.append(p.strip())
+    else:
+        try:
+            queryNames.append(splitName[2] + '_' + splitName[0][0])
+        except IndexError:
+            queryNames.append('')
+
+print(queryNames)
+
+
+
 # test using Arvind
 # authUrl = 'http://arxiv.org/find/eess/1/au:+Arvind/0/1/0/all/0/1'
 # authData = urllib.request.urlopen(authUrl).read().decode('utf-8')
 # print(authData)
+
+# absIds = []
+
+# soup = BeautifulSoup(authData, 'html.parser')
+# for sp in soup.find_all("a", title="Abstract"):
+#    absIds.append(sp.get('href'))
+
+# print(absIds)
+
+
 
 # get abstract id 1712.08227 for Arvind
 # absUrl = 'https://arxiv.org/abs/1712.08227'
@@ -34,18 +65,40 @@ print(profs)
 
 # print("absWords", absWords)
 
-
 # Retrieve array of abstract ids for all authors
 absIDs = []
-authData = []
-authUrl = []
-baseUrl = "http://arxiv.org/find/eess/1/au:+"
-urlSuffix = "/0/1/0/all/0/1"
 
-for p in profs:
-    print(p)
-    authUrl = baseUrl + urllib.parse.quote(p) + urlSuffix
-    print(authUrl)
+authUrl = []
+baseAuthUrl = "http://arxiv.org/find/eess/1/au:+"
+authUrlSuffix = "/0/1/0/all/0/1"
+authData = []
+
+absDoc = []
+baseAbsUrl = ""
+absKeywords =[]
+
+absIds = []
+
+# for p in profs:
+#     authUrl = baseAuthUrl + urllib.parse.quote(p) + authUrlSuffix
+#
+#     for u in authUrl:
+#         print('Fetching data from {0}'.format(authUrl))
+#         authData = urllib.request.urlopen(authUrl).read().decode('utf-8')
+#         # parse for absId
+#         print(authData)
+#         soup = BeautifulSoup(authData, 'html.parser')
+#         for sp in soup.find_all("a", title="Abstract"):
+#             print(sp.get('href'))
+#             absIds.append(sp.get('href'))
+#
+# print(absIds)
+
+
+ #       for ad in authData:
+ #           absUrl =
+
+
 
 # Build array of keywords from all abstract ids
 
