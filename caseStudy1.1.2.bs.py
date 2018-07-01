@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import urllib.request
 import pickle
 from io import StringIO
+import nltk
+from nltk.tokenize import sent_tokenize, word_tokenize
 
 absIDs = []
 authUrls = []
@@ -72,8 +74,14 @@ output.close()
 
 keywordsFile = open('keywords.pkl', 'rb')
 keywords = pickle.load(keywordsFile)
-print(keywords)
 keywordsFile.close()
+
+# tokenize
+keyword_tokens = sent_tokenize(keywords[0])
+
+
+
+
 
 
 
