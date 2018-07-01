@@ -3,7 +3,7 @@ import urllib.request
 import pickle
 from io import StringIO
 import nltk
-from nltk.tokenize import sent_tokenize, word_tokenize
+import collections
 
 absIDs = []
 authUrls = []
@@ -76,8 +76,14 @@ keywordsFile = open('keywords.pkl', 'rb')
 keywords = pickle.load(keywordsFile)
 keywordsFile.close()
 
-# tokenize
-keyword_tokens = sent_tokenize(keywords[0])
+# tokenize abstract content/keywords
+keyword_tokens = nltk.word_tokenize(keywords[0])
+print(keyword_tokens)
+
+# use collections to process each abstract using a counter/dictionary
+
+
+# Implement Latent Dirichlet Allocation (LDA) to discover topics
 
 
 
