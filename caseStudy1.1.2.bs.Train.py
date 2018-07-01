@@ -61,18 +61,4 @@ for a in absIDs:
     soup = BeautifulSoup(absDoc, 'html.parser')
     sp = soup.find_all("blockquote", class_="abstract mathjax")
     for k in sp:
-        keyWords.append(k.contents[2])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        keyWords.append(a.contents[2])
