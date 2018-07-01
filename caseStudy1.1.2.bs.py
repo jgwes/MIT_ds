@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib.request
+import pickle
+from io import StringIO
 
 absIDs = []
 authUrls = []
@@ -62,6 +64,18 @@ for a in absIDs:
     sp = soup.find_all("blockquote", class_="abstract mathjax")
     for k in sp:
         keyWords.append(k.contents[2])
+
+# pickle
+output = open('keywords.pkl', 'wb')
+pickle.dump(keyWords, output)
+output.close()
+
+keywordsFile = open('keywords.pkl', 'rb')
+keywords = pickle.load(keywordsFile)
+print(keywords)
+keywordsFile.close()
+
+
 
 
 
