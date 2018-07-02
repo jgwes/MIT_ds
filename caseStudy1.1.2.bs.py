@@ -80,7 +80,7 @@ keywordsFile.close()
 keyword_tokens = nltk.word_tokenize(keywords[0])
 print(keyword_tokens)
 
-# use collections to process each abstract using a counter/dictionary
+# Use collections to process each abstract using a counter/dictionary
 
 
 # Implement Latent Dirichlet Allocation (LDA) to discover topics
