@@ -4,6 +4,8 @@ import pickle
 from io import StringIO
 import nltk
 import collections
+import numpy
+from scipy.special import gammaln, psi
 
 absIDs = []
 authUrls = []
@@ -76,7 +78,7 @@ keywordsFile = open('keywords.pkl', 'rb')
 keywords = pickle.load(keywordsFile)
 keywordsFile.close()
 
-# tokenize abstract content/keywords
+# Tokenize abstract content/keywords
 keyword_tokens = nltk.word_tokenize(keywords[0])
 print(keyword_tokens)
 
@@ -84,6 +86,44 @@ print(keyword_tokens)
 
 
 # Implement Latent Dirichlet Allocation (LDA) to discover topics
+#
+#     lambda = posterior distribution of topics for each word
+#     vocab = vocabulary in the documents
+#     K = number of topics
+#     D = total number of documents
+#     alpha = parameter for per-document topic distribution
+#     eta = parameter for per-topic vocab distribution
+#     tau = delay to weigh down early iterations
+#     kappa = forgetting rate, larger the value, the slower old info is forgotten
+#     max:iterations =  maximum iterations the updates should go on for. Check
+#                     if the delta in two consecutive values of lambda
+#                     is smaller than a certain value, the algorithm has converged.
+#                     Setting this value too small, the updates may run forever
+
+class sviLda():
+
+    def __init__(self, vocab, K, D, alpha, eta, tau, kappa, docs, iterations):
+        self._vocab = vocab
+        self._V = len(vocab)
+        self._K = K
+        self._D = D
+        self._alpha = alpha
+        self._eta = eta
+        self._tau = tau
+        self._kappa = kappa
+        self._lambda = 1* numpy.random.gamma(100., 1./100., (self._K, self._V))
+        self._Elogbeta = dirichlet_expectation(self._lambda)
+        self._expElogbeta = numpy.exp(self._Elogbeta)
+        self._docs = docs
+        self.ct = 0
+        self._iterations = iterations
+
+    def dirichlet_expecation(alpha):
+        if(len(alpha.shape) == 1):
+            return psi(alpha) - psi(numpy.sum(alpha))
+        return psi(alpha) - psi(numpy.sum(alpha,1))[:,numpy.newaxis]
+
+
 
 
 
