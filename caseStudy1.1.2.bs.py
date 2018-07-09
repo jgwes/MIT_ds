@@ -7,18 +7,19 @@ import collections
 import numpy
 from scipy.special import gammaln, psi
 
-absIDs = []
-authUrls = []
+#absIDs = []
+#authUrls = []
 baseAuthUrl = "http://arxiv.org/find/eess/1/au:+"
 #authUrlSuffix = "/0/1/0/all/0/1"
-authUrlSuffix = ""
-authData = []
-absDoc = []
+
+#authUrlSuffix = ""
+#authData = []
+#absDoc = []
 baseAbsUrl = "https://arxiv.org"
-absUrl = []
-keyWords = []
-profs = []
-queryNames = []
+#absUrl = []
+#keyWords = []
+#profs = []
+#queryNames = []
 
 
 # scrape professor names from MIT
@@ -112,16 +113,36 @@ class sviLda():
         self._tau = tau
         self._kappa = kappa
         self._lambda = 1* numpy.random.gamma(100., 1./100., (self._K, self._V))
-        self._Elogbeta = dirichlet_expectation(self._lambda)
+        self._Elogbeta = sviLda.dirichlet_expectation(self._lambda)
         self._expElogbeta = numpy.exp(self._Elogbeta)
         self._docs = docs
         self.ct = 0
         self._iterations = iterations
 
-    def dirichlet_expecation(alpha):
+    def dirichlet_expectation(alpha):
+        # calculate the expectation for a beta distribution given parameter alpha
+        # from onlinedavb.py by Matthew Hoffman
         if(len(alpha.shape) == 1):
             return psi(alpha) - psi(numpy.sum(alpha))
         return psi(alpha) - psi(numpy.sum(alpha,1))[:,numpy.newaxis]
+
+    def updateLocal(self, doc):
+        # take parsed document, update local variables
+        (words, counts) = doc
+        newdoc = []
+        N_d = sum(counts)
+        phi_d = numpy.zeros((self._K, N_d))
+        gamma_d = numpy.random.gamma(100.,1./100.,(self._K))
+        Elogtheta_d = sviLda.dirichlet_expectation(gamma_d)
+        expElogtheta_d = numpy.exp(Elogtheta_d)
+        for i,item in enumerate(counts)
+            for j in range(item):
+                newdoc.append(words[i])
+        assert len(newdoc) == N_d, "error"
+
+        for i in range(self._iterations):
+            for m, word in enumerate(newdoc):
+                phi_d[:,m] = numpy.multiply(expElogtheta_d, self._expElogbeta[:.]
 
 
 
