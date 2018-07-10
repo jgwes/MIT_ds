@@ -142,8 +142,56 @@ class sviLda():
 
         for i in range(self._iterations):
             for m, word in enumerate(newdoc):
-                phi_d[:,m] = numpy.multiply(expElogtheta_d, self._expElogbeta[:.]
+                phi_d[:,m] = numpy.multiply(expElogtheta_d, self._expElogbeta[:,word]) + 1e-100
+                phi_d[:,m] = phi_d[:,m]/numpy.sum(phi_d[:,m])
 
+            gamma_new = self._alpha + numpy.sum(phi_d,axis=1)
+            meanchange = numpy.mean(abs(gamma_d -gamma_new))
+            if(meanchange < meanthresh):
+                break
+
+            gamma_d = gamma_new
+            Elogtheta_d = dirichlet_expectation(gamma_d)
+            expElogtheta_d = numpy.exp(Elogtheta_d)
+
+        newdoc = numpy.asarray(newdoc)
+        return phi_d, newdoc, gamma_d
+
+    def updateGlobal(self, local_param, doc):
+        lambda_d = numpy.zeros((self._K, self._V))
+        for k in range(self._K):
+            phi_dk = numpy.zeros(self._V)
+            for m, word in enumerate(doc):
+                phi_dk[word] += phi_d[k][m]
+            lambda_d[k] = self._eta + self._D * phi_dk
+        rho = (self.ct + self._tau)**(-self._kappa)
+        self._lambda = (1-rho)*self._lambda+rho*lambda_d
+        self._Elogbeta = dirichlet_expectation(self._lambda)
+        self._expElogbeta = numpy.exp(self._Elogbeta)
+
+    def runSVI(self):
+        for i in range(self._iterations):
+            randint = random.radnint(0,self._D-1)
+            print "ITERATION", i, " running document number ",
+            randint doc = parseDocument(self._docs[randint],self._vocab) phi_doc,
+            newdoc,
+            gamma_d = self.updateLocal(doc) self.updateGlobal(phi_doc, newdoc)
+            self.ct += 1
+
+    def parseDocument(doc, vocab):
+        wordslist = list()
+        countslist = list()
+        doc = doc.lower()
+        tokens = wordpunct_tokenize(doc)
+        for word in tokens:
+            if word in vocab: wordtk = vocab[word]
+                if wordtk not in dictionary:
+                    dictionary[wordtk] = 1
+                else:
+                    dictionary[wordtk] += 1
+                wordslist.append(dictionary.keys())
+                countslist.append(dictionary.values())
+            return (wordslist[0], countslist[0])
 
 
 
