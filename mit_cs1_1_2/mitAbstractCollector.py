@@ -45,6 +45,7 @@ class mitAbstractCollector:
                     self.queryNames.append(splitname[1] + '_' + splitname[0][0])
                 except IndexError:
                     self.queryNames.append(p.strip())
+
             else:
                 try:
                     self.queryNames.append(splitname[2] + '_' + splitname[0][0])
