@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import urllib.request
+import urllib
 import pickle
 
 class mitAbstractCollector:
@@ -14,7 +14,7 @@ class mitAbstractCollector:
     queryNames = []
 
     baseAuthUrl = "http://arxiv.org/find/eess/1/au:+"
-    authUrlSuffix = "/0/1/0/all/0/1"
+    #authUrlSuffix = "/0/1/0/all/0/1"
     authUrlSuffix = ""
     baseAbsUrl = "https://arxiv.org"
 
@@ -26,7 +26,7 @@ class mitAbstractCollector:
         soup = BeautifulSoup(htmlDoc, 'html.parser')
         sp = soup.find_all("span", class_="field-content card-title")
         for a in sp:
-            profs.append(a.get_text())
+            self.profs.append(a.get_text())
 
     #test
     def scrape_prof_names_test(self):
