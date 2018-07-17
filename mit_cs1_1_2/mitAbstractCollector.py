@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import urllib
+import urllib.request
 import pickle
 
 class mitAbstractCollector:
@@ -104,21 +104,21 @@ class mitAbstractCollector:
     # Use collections to process each abstract using a counter/dictionary
 
 
-def main():
-
-    _abstract_collector = mitAbstractCollector()
-    print("attempting to create abstract file...")
-    _abstract_collector.create_abstract_file()
-    _abstract_collection_filename = _abstract_collector.get_abstract_collection_file_handler()
-
-    _abstracts_collection_file = open(_abstract_collection_filename, 'rb')
-    _abstracts_collection = pickle.load(_abstracts_collection_file)
-    _abstracts_collection_file.close()
-
-    print("printing abstracts collection...")
-    print(_abstracts_collection[0])
-    print(_abstracts_collection[1])
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#
+#     _abstract_collector = mitAbstractCollector()
+#     print("attempting to create abstract file...")
+#     _abstract_collector.create_abstract_file()
+#     _abstract_collection_filename = _abstract_collector.get_abstract_collection_file_handler()
+#
+#     _abstracts_collection_file = open(_abstract_collection_filename, 'rb')
+#     _abstracts_collection = pickle.load(_abstracts_collection_file)
+#     _abstracts_collection_file.close()
+#
+#     print("printing abstracts collection...")
+#     print(_abstracts_collection[0])
+#     print(_abstracts_collection[1])
+#
+#
+# if __name__ == '__main__':
+#     main()
